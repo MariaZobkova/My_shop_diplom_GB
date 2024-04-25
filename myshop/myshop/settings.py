@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'mainapp',
     'goods',
     'clients',
+    'carts',
+    'orders',
 
 ]
 
@@ -134,6 +136,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+AUTH_USER_MODEL = 'clients.Client'
 
 

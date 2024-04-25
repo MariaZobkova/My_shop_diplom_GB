@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+                    <!-- Контент на странице -->
+                    <div class="row">
+                        <div class="container mt-5">
+                            <div class="row">
+                                <!-- Профиль с данными пользователя -->
+                                <div class="col-md-5">
+                                    <div class=" bg-white p-4 mb-4 mx-2 rounded custom">
+                                        <h3 class="text-center mb-4">Профиль пользователя</h3>
+                                        <form action="{% url "client:profile" %}" method="post">
+                                        {% csrf_token %}
+                                        {{form.as_p}}
+                                            <button type="submit" class="btn btn-dark">Сохранить</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Корзина -->
+                                <div class="col-md-7">
+                                    <div class=" bg-white p-4 mb-4 mx-2 rounded custom">
+                                        <h3 class="text-center mb-4">Корзина</h3>
+                                        <div class="container" id="cart-items-container">
+                                            <!-- Разметка корзины -->
+                                            {% include "carts/cart.html" %}
+                                            <!-- Закончилась разметка корзины -->
+                                        </div>
+                                        {% if carts %}
+                                            <a class="btn btn-dark" href="{% url "orders:create_order" %}">
+                                                Оформить заказ
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+{% endblock content %}
+
+

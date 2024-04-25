@@ -1,10 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+ <!-- Контент на странице -->
+                    <div class="row">
+
+                        <!-- Карта товара -->
+                        {% for product in goods %}
+                        <div class="col-lg-4 col-md-6 p-4">
+                            <div class="card border-primary rounded custom">
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" class="card-img-top" alt="...">
+                                {% else %}
+                                    <img src="{% static "deps/images/no-photo.jpg" %}" class="card-img-top" alt="...">
+                                {% endif %}
+                                <div class="card-body">
+                                    <a href="{% url "catalog:product" product.id %}">
+                                        <p class="card-title">{{ product.name }}</p>
+                                    </a>
+                                    <p class="card-text text-truncate">{{ product.description }}</p>
+                                    <p class="product_id">{{ product.show_id }}</p>
+                                    <div class="d-flex justify-content-between">
+                                        <p><strong>{{ product.price }}</strong></p>
+                                        <a href="{% url "cart:cart_add" product.id %}" class="btn add-to-cart">
+                                            <img class="mx-1" src="{% static "deps/icons/cart-plus.svg" %}" alt="Catalog Icon"
+                                                width="32" height="32">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    </div>
+                    <!-- Пагинация -->
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center my-4">
+                            <div class="custom-shadow d-flex">
+                                <li class="page-item disabled">
+                                  <a class="page-link">Previous</a>
+                                </li>
+
+                                {% for page in goods.paginator.page_range %}
+
+                                <li class="page-item"><a class="page-link" href="{% url "catalog:index" category_id page %}">{{ page }}</a></li>
+
+                                {% endfor %}
+                                <li class="page-item">
+                                  <a class="page-link" href="#">Next</a>
+                                </li>
+                            </div>
+                        </ul>
+                    </nav>
+{% endblock content %}
+
+{% block footer %}
+    <footer class="py-2 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Студия дизайна "Ромашка" 2024</p>
+        </div>
+    </footer>
+{% endblock footer %}
